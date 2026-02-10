@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.logging.FileHandler;
 
 public class ProgramController {
 
@@ -9,6 +10,11 @@ public class ProgramController {
     public ProgramController() {
         this.fileHandler = new FileHandler();  // Role B
         this.cipher = new cipher();            // Role D
+    }
+
+    public ProgramController(FileHandler fileHandler, cipher cipher) {
+        this.fileHandler = fileHandler;
+        this.cipher = cipher;
     }
 
     // LIST FILES
