@@ -50,3 +50,4 @@ Error Handling:
     if <fileNum> is a valid format but doesn't correspond to any available file, print: "ERROR: Unknown File"
  - File can't be deciphered:
     if deciphering fails like an invalid key, print "ERROR: File Cannot Be Deciphered"
+
