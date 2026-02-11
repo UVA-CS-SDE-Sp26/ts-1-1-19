@@ -41,4 +41,10 @@ class ProgramControlTest {
         topSecret4.programControl(1000, dataFolder);
     }
 
+    @Test
+    void fileMissing(){
+        TopSecret topSecret5 = new TopSecret5();
+        topSecret5.programControl(3);
+    }
+
 }
