@@ -3,13 +3,16 @@ import java.io.File;
 import java.io.FileReader;
 
 public class ProgramControl {
+    public File folder;
+    public File[] listOfFiles;
     public ProgramControl() {
-
+        folder = new File(System.getProperty("user.dir"));
+        listOfFiles = folder.listFiles();
     }
     public void loadProgram(String filepath, String [] args) throws Exception
     {
-        File folder = new File(filepath);
-        File[] listOfFiles = folder.listFiles();
+        folder = new File(filepath);
+        listOfFiles = folder.listFiles();
         Ciphers userKey = null; // get original default key
 
         if (args.length == 0) // if no arguments are provided
@@ -29,7 +32,7 @@ public class ProgramControl {
 
                 if(args.length == 2) // if two arguments provided
                 {
-                    userKey = String.valueOf(args[1]); // consider separate user-entered cipher
+                    //userKey = String.valueOf(args[1]); // consider separate user-entered cipher
                 }
                 else
                     userKey.loadCipher("ciphers/key.txt");

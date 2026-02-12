@@ -6,7 +6,7 @@
 import java.util.*;
 import java.io.*;
 public class TopSecret {
-    public static String folderPath; // this should be data
+    public static String folderPath; // this should be the data folder
 
 
     public static void main(String[] args) { // maybe this should be in a "solve" method b/c we are running tests in a separate file?
@@ -25,6 +25,7 @@ public class TopSecret {
         }
 
         // Team member D
+        // Already integrated into Team C code
     }
 
 
