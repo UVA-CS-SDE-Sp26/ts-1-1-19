@@ -1,0 +1,53 @@
+Top Secret - Katherine Ku (A)
+
+Program Name:
+    topsecret
+
+How to Run:
+    java topsecret
+    java topsecret <fileNum>
+    java top secret <fileNum><keyOverride>
+
+ Args:
+    <fileNum>
+        - displays on screen the contents of the file
+        - must be a two digit number string
+        - program uses the default key for deciphering
+
+    <keyOverride>
+        - specifies an alternate key to use when deciphering
+        - contents of the corresponding file is displayed on screen
+        - optional second arg
+
+Behavior:
+    1. No Arguments
+        Command:
+            java topsecret
+        Output:
+            Prints a numbered list of available files
+            After printing the list, the program exits
+
+    2. One Argument
+        Command:
+            java topsecret 01
+        Output:
+            Displays the contents of the file associated with "01"
+            After displaying the contents, the program exits
+
+    3. Two Arguments
+        Command:
+            java topsecret 01 alternateKey.txt
+        Output:
+            Displays the contents of the file associated with "01" using the alternate key
+            After displaying the contents, the program exits
+
+Error Handling:
+ - Too many arguments:
+      if more than 2 arguments are provided, print "ERROR: Too Many Arguments"
+ - Invalid file number format:
+      if <fileNum> is not exactly two digits ranging from 00-99, print: "ERROR: Invalid File Number"
+ - Unknown file:
+    if <fileNum> is a valid format but doesn't correspond to any available file, print: "ERROR: Unknown File"
+ - File can't be deciphered:
+    if deciphering fails like an invalid key, print "ERROR: File Cannot Be Deciphered"
+
