@@ -28,6 +28,7 @@ public class FileHandlerTest {
     //Capital Sensitive Test
     @Test
     public void capitalSensitiveTest(){
-        assertEquals(fh.getData("File_Example.txt"),fh.getData("file_example.txt"));
+        assertEquals( fh.getData("File_Example.txt"), fh.getData("file_example.txt"));
+        }
+
     }
-}

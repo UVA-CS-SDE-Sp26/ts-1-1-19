@@ -1,29 +1,24 @@
 import java.io.*;
 import java.util.*;
 
-public class FileHandler extends Throwable{
+public class FileHandler {
 
-    //Find "Data" Directory and Create Array of listed items.
-    File dataDir = new File("data");
-    File[] listData = dataDir.listFiles();
-
-    //Getting The Data, Linear Performance
-    public String getData(String contentFile){
-        for (File curFile : listData) {
-            if (curFile.getName().equals(contentFile)) {
-                try {
-                    Scanner sc = new Scanner(curFile);
-                    StringBuilder sb = new StringBuilder();
-                    while (sc.hasNextLine()) {
-                        sb.append(sc.nextLine()).append("\n");
-                    }
-                    sc.close();
-                    return sb.toString();
-                } catch (FileNotFoundException e) {
-                    return "File Not Found!";
+    public String getData(String contentFile) {
+        File file = new File("data", contentFile);
+        if (!file.exists()) {
+            return "File Not Found!";
+        }
+        try (Scanner sc = new Scanner(file)) {
+            StringBuilder sb = new StringBuilder();
+            while (sc.hasNextLine()) {
+                sb.append(sc.nextLine());
+                if (sc.hasNextLine()) {
+                    sb.append("\n");
                 }
             }
+            return sb.toString();
+        } catch (FileNotFoundException e) {
+            return "File Not Found!";
         }
-        return "";
     }
 }
