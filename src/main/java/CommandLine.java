@@ -1,6 +1,6 @@
 public class CommandLine {
     public void run(String[] args) {
-        ProgramControl controller = new ProgramControl();
+        ProgramController controller = new ProgramController();
 
         if (args.length == 0) {
             controller.listFiles();
