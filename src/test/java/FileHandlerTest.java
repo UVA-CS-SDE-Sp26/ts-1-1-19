@@ -16,7 +16,13 @@ public class FileHandlerTest {
     @Test
     public void correctFileTest(){
         String out = fh.getData("File_Example.txt");
-        assertEquals("This is the face of the clinically insane.",out);
+        assertEquals("Do not delete this file. It is required for a test.",out);
+    }
+
+    @Test
+    public void correctFileContents(){
+        String out = fh.getData("File_Example.txt");
+        assertNotEquals("Do delete this file. It it incorrect and sad.",out);
     }
 
     //Incorrect File Test
