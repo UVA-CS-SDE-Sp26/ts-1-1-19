@@ -9,10 +9,6 @@ public class FileHandler extends Throwable{
 
     //Getting The Data, Linear Performance
     public String getData(String contentFile){
-        //STUB: read file and convert to string
-        if (listData == null) {
-            return "";
-        }
         for (File curFile : listData) {
             if (curFile.getName().equals(contentFile)) {
                 try {
@@ -24,7 +20,7 @@ public class FileHandler extends Throwable{
                     sc.close();
                     return sb.toString();
                 } catch (FileNotFoundException e) {
-                    return "";
+                    return "File Not Found!";
                 }
             }
         }
