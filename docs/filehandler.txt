@@ -1,0 +1,24 @@
+FileHandler for TopSecret
+2/10/26
+Geehun Wang
+nka5uz
+
+The FileHandler program aims to fetch and read files from the data folder.
+It also is able to return a String object based on the contents of the file.
+
+Pseudocode:
+
+input: "File_Example.txt"
+if File_Example.txt is found in directory "data": return contents of File_Example.txt as a String object.
+else File_Example.txt is not found in directory "data": expect FileNotFoundException.
+
+Methods:
++getData(String): String
+
+Tests
+Files in "data" directory: File_Example.txt
+
+1. Correct File Test // getData(File_Example.txt) // expected: contents of file returned as string. (From File_Example.txt)
+2. Correct File Contents //getData(File_Example.txt) // expected: contents of the file different than the incorrect return
+3. Incorrect File Test // getData(Wrong_Text_Name.txt) // expected: thrown FileNotFoundException caught as "File Not Found!"
+4. Capital Sensitive Test // getData(file_example.txt) // expected: thrown FileNotFoundException caught as "File Not Found!"
