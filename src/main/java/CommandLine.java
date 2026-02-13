@@ -4,7 +4,15 @@ import java.util.Comparator;
 
 public class CommandLine {
 
-    private FileHandler fileHandler = new FileHandler();
+    private FileHandler fileHandler;
+
+    public CommandLine(){
+        this.fileHandler = new FileHandler();
+    }
+
+    public CommandLine(FileHandler fileHandler){
+        this.fileHandler = fileHandler;
+    }
 
     public void run(String[] args) {
         File folder = new File("data");
@@ -40,7 +48,7 @@ public class CommandLine {
         }
 
         String filename = listOfFiles[index].getName();
-        String content = fileHandler.getData(fileName);
+        String content = fileHandler.getData(filename);
 
         //case 3: cipher key
         if (args.length == 2) {
