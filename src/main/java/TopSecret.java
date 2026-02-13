@@ -1,3 +1,4 @@
+
 /**
  * Commmand Line Utility
  * part a --> command line interface
@@ -64,6 +65,7 @@ public class TopSecret {
         //File folder = new File("data"); // just replace this with whatever the actual folder is (especially file and whatnot)
 
         // Team member A
+      new CommandLine().run(args); 
 
         // Team member B
 
@@ -84,6 +86,7 @@ public class TopSecret {
         }
 
         // Team member D
+
     }
 
 
