@@ -1,0 +1,14 @@
+Cipher Deciphering Feature
+
+This program reads a cipher from ciphers/key.txt, which contains two lines:
+1) The real alphabet
+2) The cipher alphabet
+
+The program validates that:
+- The file has exactly two lines
+- Both lines are the same length
+- There are no duplicate characters
+
+The decipher() method takes a ciphered string and replaces each character
+with its corresponding letter from the real alphabet. Characters that are
+not in the cipher (such as spaces or punctuation) are left unchanged.
