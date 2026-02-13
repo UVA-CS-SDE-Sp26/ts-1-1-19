@@ -9,44 +9,48 @@ public class CommandLineTest {
     private CommandLine cli;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         fakeHandler = new FakeFileHandler();
-        cli = new CommandLine(fakeHandler);
+        cli = new CommandLine(fakeHandler); // inject fake
     }
 
+    // Test 1: No args should NOT read file
     @Test
-    void testNoArgsListsFiles(){
+    public void testNoArgsListsFiles(){
         cli.run(new String[]{});
-        assertTrue(fakeHandler.listCalled);
+        assertFalse(fakeHandler.readCalled);
     }
 
+    // Test 2: Valid file number reads file
     @Test
-    void testSingleArgReadsFile(){
+    public void testSingleArgReadsFile(){
         cli.run(new String[]{"01"});
         assertTrue(fakeHandler.readCalled);
-        assertEquals("filea.txt", fakeHandler.lastFilename);
+        assertEquals("File_Example.txt", fakeHandler.lastFilename);
     }
 
+    // Test 3: Invalid arg should not read file
     @Test
-    void testInvalidArgDoesNothing(){
+    public void testInvalidArgDoesNothing(){
         cli.run(new String[]{"ABC"});
         assertFalse(fakeHandler.readCalled);
     }
 
+    // Test 4: Two args still reads file
     @Test
-    void testTwoArgsAcceptsKey(){
+    public void testTwoArgsAcceptsKey(){
         cli.run(new String[]{"01", "key.txt"});
         assertTrue(fakeHandler.readCalled);
     }
 
     private static class FakeFileHandler extends FileHandler{
-        boolean listCalled = false;
+
         boolean readCalled = false;
         String lastFilename = null;
 
         @Override
         public String getData(String filename){
-            readCalled=true;
+            readCalled = true;
             lastFilename = filename;
             return "TEST DATA";
         }

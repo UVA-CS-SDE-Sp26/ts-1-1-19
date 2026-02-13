@@ -6,64 +6,79 @@ public class CommandLine {
 
     private FileHandler fileHandler;
 
-    public CommandLine(){
+    public CommandLine() {
         this.fileHandler = new FileHandler();
     }
 
-    public CommandLine(FileHandler fileHandler){
+    // Constructor for testing
+    public CommandLine(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
     }
 
     public void run(String[] args) {
-        File folder = new File("data");
-        File[] listOfFiles = folder.listFiles();
 
-        if (listOfFiles == null || listOfFiles.length == 0) {
+        File folder = new File("data");
+        File[] files = folder.listFiles();
+
+        if (files == null || files.length == 0) {
             System.out.println("No files found");
             return;
         }
 
-        Arrays.sort(listOfFiles, Comparator.comparing(File::getName));
+        Arrays.sort(files, Comparator.comparing(File::getName));
 
-        //case 1: no args -> list files
+        // Case 1: no args → list files
         if (args.length == 0) {
-            for (int i=0; i<listOfFiles.length; i++) {
-                System.out.printf("%02d %s%n", i+1, listOfFiles[i].getName());
+            for (int i = 0; i < files.length; i++) {
+                System.out.printf("%02d %s%n", i + 1, files[i].getName());
             }
+            return;
+        }
+
+        // Too many args
+        if (args.length > 2) {
+            printUsage();
             return;
         }
 
         String fileNumber = args[0];
 
-        if (!isTwoDigitNumber(fileNumber)){
+        if (!isTwoDigitNumber(fileNumber)) {
             printUsage();
             return;
         }
 
-        int index = Integer.parseInt(fileNumber)-1;
+        int index = Integer.parseInt(fileNumber) - 1;
 
-        if (index<0 || index>=listOfFiles.length){
+        if (index < 0 || index >= files.length) {
             System.out.println("Invalid file number");
             return;
         }
 
-        String filename = listOfFiles[index].getName();
+        String filename = files[index].getName();
+
+        // THIS is what your tests care about
         String content = fileHandler.getData(filename);
 
-        //case 3: cipher key
+        // If two args, accept key but do nothing special in this class
         if (args.length == 2) {
             String key = args[1];
+            // Key handling would be done elsewhere (ProgramControl / Cipher)
         }
+
         System.out.println(content);
     }
+
     private boolean isTwoDigitNumber(String s) {
-        return s != null && s.length() == 2 && Character.isDigit(s.charAt(0)) && Character.isDigit(s.charAt(1)) && !s.equals("00");
+        return s != null &&
+                s.matches("\\d{2}") &&
+                !s.equals("00");
     }
 
     private void printUsage() {
         System.out.println("Usage:");
         System.out.println("java topsecret");
         System.out.println("java topsecret 01");
-        System.out.println("java topsecret 01 key");
+        System.out.println("java topsecret 01 key.txt");
     }
 }

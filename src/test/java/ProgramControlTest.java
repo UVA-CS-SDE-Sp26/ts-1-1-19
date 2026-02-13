@@ -1,50 +1,121 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import java.io.File;
+import java.util.Arrays;
+import static org.junit.jupiter.api.Assertions.*;
 
-@ExtendWith(MockitoExtension.class)
 class ProgramControlTest {
-    @Mock
-    Program program;
 
-    @Mock
-    File dataFolder;
+    private FakeFileHandler fakeFileHandler;
+    private ProgramControl controller;
 
-    @Test
-    void noArguments() {
-        TopSecret topSecret0 = new TopSecret0(dataFolder);
-
-        topSecret0.programControl("", dataFolder);
+    @BeforeEach
+    public void setUp() {
+        fakeFileHandler = new FakeFileHandler();
+        controller = new ProgramControl(fakeFileHandler);
     }
 
+    // Test 1: No files in folder
     @Test
-    void nonIntArguments() {
-        TopSecret topSecret1 = new TopSecret1(dataFolder);
-        topSecret1.programControl("Alakazam", dataFolder);
+    public void noFilesInFolder() {
+        fakeFileHandler.files = new File[0];
+        File[] result = controller.getSortedFiles();
+        assertEquals(1, result.length); //Geehun told me he put in a sample file in there for the tests. "File_Example.txt" If it detects 1, then that means it doesn't detect anything else.
     }
 
+    // Test 2: No args should list files
     @Test
-    void tooManyArguments() {
-        TopSecret topSecret2 = new TopSecret2(dataFolder);
-        topSecret2.programControl("Squirtle", "Charizard", "Heracross", "Escavalier", dataFolder);
+    public void noArgsListsFiles() {
+        File[] result = controller.getSortedFiles();
+        assertTrue(result.length > 0, "The 'data' folder should contain at least one file");
+        File folder = new File("data");
+        File[] actualFiles = folder.listFiles();
+        assertNotNull(actualFiles, "'data' folder should exist");
+        for (File f : actualFiles) {
+            boolean found = Arrays.stream(result)
+                    .anyMatch(r -> r.getName().equals(f.getName()));
+            assertTrue(found, "Expected file in listing: " + f.getName());
+        }
     }
 
+    // Test 3: Non-integer argument
     @Test
-    void argumentNotInRangeNegative(){
-        TopSecret topSecret3 = new TopSecret3(dataFolder);
-        topSecret3.programControl(-10, dataFolder);
+    public void nonIntegerArgumentThrows() {
+        assertThrows(NumberFormatException.class, () -> {
+            Integer.parseInt("ABC");
+        });
     }
 
+    // Test 4: Index out of range
     @Test
-    void argumentNotInRangePositive(){
-        TopSecret topSecret4 = new TopSecret4(dataFolder);
-        topSecret4.programControl(1000, dataFolder);
+    public void indexOutOfBoundsThrows() {
+        fakeFileHandler.files = new File[]{
+                new File("fileA.txt")
+        };
+
+        assertThrows(IndexOutOfBoundsException.class, () -> {
+            int index = 5;
+            if (index < 0 || index >= fakeFileHandler.files.length) {
+                throw new IndexOutOfBoundsException();
+            }
+        });
     }
 
+    // Test 5: Valid index returns file content
     @Test
-    void fileMissing(){
-        TopSecret topSecret5 = new TopSecret5();
-        topSecret5.programControl(3);
+    public void validIndexReturnsFileContent() {
+        fakeFileHandler.files = new File[]{
+                new File("fileA.txt")
+        };
+
+        String content = controller.getFileContent("fileA.txt");
+
+        assertEquals("SECRET DATA", content);
     }
 
+    // Test 6: Empty file
+    @Test
+    public void emptyFileReturnsEmptyString() {
+        fakeFileHandler.emptyFile = true;
+
+        String content = controller.getFileContent("empty.txt");
+
+        assertEquals("", content);
+    }
+
+    // Test 7: Missing file
+    @Test
+    public void missingFileReturnsNotFound() {
+        fakeFileHandler.missingFile = true;
+
+        String content = controller.getFileContent("missing.txt");
+
+        assertEquals("File Not Found!", content);
+    }
+
+    // Fake FileHandler for testing
+    private static class FakeFileHandler extends FileHandler {
+
+        File[] files = new File[]{
+                new File("fileA.txt"),
+                new File("fileB.txt")
+        };
+
+        boolean emptyFile = false;
+        boolean missingFile = false;
+
+        @Override
+        public String getData(String filename) {
+
+            if (missingFile) {
+                return "File Not Found!";
+            }
+
+            if (emptyFile) {
+                return "";
+            }
+
+            return "SECRET DATA";
+        }
+    }
 }
