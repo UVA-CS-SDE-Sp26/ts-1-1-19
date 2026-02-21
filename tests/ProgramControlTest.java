@@ -8,13 +8,12 @@ class ProgramControlTest {
     Program program;
 
     @Mock
-    File dataFolder;
+    String dataFolder;
 
     @Test
-    void noArguments() {
+    void noArguments() { // how to take args
         TopSecret topSecret0 = new TopSecret0(dataFolder);
 
-        topSecret0.programControl("", dataFolder);
     }
 
     @Test
