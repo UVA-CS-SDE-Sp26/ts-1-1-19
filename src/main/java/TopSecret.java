@@ -6,26 +6,24 @@
 import java.util.*;
 import java.io.*;
 public class TopSecret {
-    public static String folderPath; // this should be the data folder
+    public static File folder;
+    //public static ProgramControl pc;
+    public TopSecret(String s) {
+        folder = new File("./" + s); // this is supposed to read in a FOLDER
+    }
 
 
-    public static void main(String[] args) { // maybe this should be in a "solve" method b/c we are running tests in a separate file?
+    public static void main(String[] args) throws Exception { // maybe this should be in a "solve" method b/c we are running tests in a separate file?
         //File folder = new File("data"); // just replace this with whatever the actual folder is (especially file and whatnot)
 
         // Team member A
-
+        CommandLine cli = new CommandLine();
+        cli.run(args);
         // Team member B
 
         // Team member C
-        ProgramControl pc = new ProgramControl();
-        try { // needed b/c we throw exception in the creation of the object
-            pc.loadProgram(folderPath, args);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
+        //pc.loadProgram("ts-1-1-19\\data", args); // different args?
         // Team member D
-        // Already integrated into Team C code
     }
 
 

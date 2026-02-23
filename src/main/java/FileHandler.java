@@ -3,6 +3,12 @@ import java.util.*;
 
 public class FileHandler {
 
+    public File[] listFiles() {
+        File folder = new File("data");
+        File[] files = folder.listFiles();
+        return files == null ? new File[0] : files;
+    }
+
     public String getData(String contentFile) {
         File file = new File("data", contentFile);
         if (!file.exists()) {
